@@ -14,6 +14,7 @@ import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import axios, { AxiosError } from "axios";
 import { LoaderCircle } from "lucide-react";
+import Link from "next/link";
 import { FormEvent, useCallback, useRef, useState } from "react";
 
 export function RegisterForm() {
@@ -43,7 +44,7 @@ export function RegisterForm() {
         const email = emailInputRef.current?.value;
         const password = passwordInputRef.current.value;
         const repeatPassword = repeatPasswordInputRef.current.value;
-    
+
         let shouldReturnError = false;
 
         if (!emailReg.test(email)) {
@@ -80,7 +81,14 @@ export function RegisterForm() {
           if (error instanceof AxiosError) {
             const { error: errorMessage } = error.response
               ?.data as RegisterResponse;
-            setFormError(errorMessage || error.message);
+
+            if (errorMessage === "user already exists") {
+              setFormError(
+                "E-mail já registrado. Tente ir ao login. "
+              );
+            } else {
+              setFormError(errorMessage || error.message);
+            }
           }
           setFormLoading(false);
           setFormSuccess(false);
@@ -129,7 +137,7 @@ export function RegisterForm() {
         </CardContent>
         <CardFooter className="grid">
           {formError && (
-            <div className="text-amber-500 mb-4">
+            <div className="text-red-600 mb-4">
               <p className="text-sm font-semibold">Erro no formulário</p>
               <p>{formError}</p>
             </div>
@@ -145,9 +153,12 @@ export function RegisterForm() {
             className="w-full flex items-center gap-2"
             disabled={formLoading}
           >
-            {formLoading && <LoaderCircle className="w-[18px]" />}
+            {formLoading && <LoaderCircle className="w-[18px] animate-spin" />}
             Cadastrar
           </Button>
+          <div className="mt-5 underline text-center">
+          <Link href="/login">Ir para o login </Link>
+          </div>
         </CardFooter>
       </Card>
     </form>
