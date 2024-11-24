@@ -43,10 +43,7 @@ export function RegisterForm() {
         const email = emailInputRef.current?.value;
         const password = passwordInputRef.current.value;
         const repeatPassword = repeatPasswordInputRef.current.value;
-        console.log("email", email);
-        console.log("password", password);
-        console.log("repeatPassword", repeatPassword);
-
+    
         let shouldReturnError = false;
 
         if (!emailReg.test(email)) {
@@ -73,15 +70,17 @@ export function RegisterForm() {
         try {
           const response = await axios.post<RegisterResponse>("/api/register", {
             email,
-            password: password,
-            password2: repeatPassword,
+            password,
+            repeatPassword,
           });
 
           setFormLoading(false);
           setFormSuccess(true);
         } catch (error) {
           if (error instanceof AxiosError) {
-            setFormError(error.response?.data?.message || error.message);
+            const { error: errorMessage } = error.response
+              ?.data as RegisterResponse;
+            setFormError(errorMessage || error.message);
           }
           setFormLoading(false);
           setFormSuccess(false);

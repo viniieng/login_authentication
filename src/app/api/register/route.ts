@@ -20,6 +20,10 @@ export async function POST(request: Request) {
 
   const { email, password, repeatPassword } = body;
 
+  console.log("email", email);
+  console.log("password", password);
+  console.log("password2", repeatPassword);
+
   if (!email || !password || !repeatPassword) {
     return NextResponse.json(
       { error: "Missing required fields" },
