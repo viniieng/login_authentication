@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Authentication Project with React, Next.js, Prisma, Tailwind, Serverless, and PostgreSQL
 
-## Getting Started
+This is a full-stack authentication project built using the following technologies:
 
-First, run the development server:
+- **React**: A JavaScript library for building user interfaces.
+- **Next.js**: A React framework for building static and dynamic websites with server-side rendering and routing.
+- **Prisma**: An ORM (Object Relational Mapping) for PostgreSQL to interact with the database.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Serverless**: A framework for deploying applications in a serverless architecture.
+- **PostgreSQL**: A relational database used to store user data, including login credentials.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The project provides user authentication features like user registration, login, password hashing, and session management via cookies with hashed tokens.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<ul>
+  <li><strong>React</strong>: Frontend library for building interactive UIs.</li>
+  <li><strong>Next.js</strong>: Framework built on top of React that supports server-side rendering, static generation, and routing.</li>
+  <li><strong>Prisma</strong>: ORM to handle PostgreSQL database interactions in a more type-safe way.</li>
+  <li><strong>Tailwind CSS</strong>: Utility-first CSS framework for building custom designs quickly.</li>
+  <li><strong>Serverless</strong>: A serverless architecture used for deploying the application.</li>
+  <li><strong>PostgreSQL</strong>: A powerful, open-source relational database management system.</li>
+</ul>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- **User Registration**: Create an account with email and password.
+- **Login System**: Users can log in using email and password.
+- **Password Hashing**: User passwords are securely hashed before being stored in the database.
+- **Session Management with Cookies**: Uses cookies with hashed tokens to manage user sessions across requests.
+- **Responsive UI**: Built with Tailwind CSS to ensure a clean, responsive design.
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. **POST** `/api/auth/register`  
+   Registers a new user by providing an email and password.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. **POST** `/api/auth/login`  
+   Authenticates an existing user using email and password. Upon successful login, a cookie is set with a hashed token that identifies the user.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## How to Run the Project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+
+Ensure that you have the following tools installed:
+
+- **Node.js** (version 14 or higher)
+- **npm** (or **yarn**) for package management
+- **PostgreSQL** for the database
+- **Serverless Framework** for deploying serverless functions
