@@ -69,6 +69,7 @@ export function RegisterForm() {
         }
 
         try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const response = await axios.post<RegisterResponse>("/api/register", {
             email,
             password,

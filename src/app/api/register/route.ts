@@ -18,9 +18,6 @@ export interface RegisterResponse {
   user?: User;
 }
 
-/**
- * Realiza o cadastro
- */
 export async function POST(request: Request) {
   const body = (await request.json()) as RegisterProps;
 
@@ -83,7 +80,7 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        // usuário já existe
+    
         return NextResponse.json(
           { error: "user already exists" },
           { status: 400 }
