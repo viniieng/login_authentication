@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { PrismaGetInstance } from "@/lib/prisma-pg";
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { GenerateSession } from "@/lib/generate-session";
 import { addHours } from "date-fns";
 import { cookies } from "next/headers";
-import { PrismaGetInstance } from "@/src/lib/prisma-pg";
-import { GenerateSession } from "@/src/lib/generate-session";
 
 interface RegisterProps {
   email: string;
@@ -18,6 +18,9 @@ export interface RegisterResponse {
   user?: User;
 }
 
+/**
+ * Realiza o cadastro
+ */
 export async function POST(request: Request) {
   const body = (await request.json()) as RegisterProps;
 
@@ -68,7 +71,7 @@ export async function POST(request: Request) {
       },
     });
 
-    (await cookies()).set({
+    cookies().set({
       name: "auth-session",
       value: sessionToken,
       httpOnly: true,
@@ -80,6 +83,7 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
+        // usuário já existe
         return NextResponse.json(
           { error: "user already exists" },
           { status: 400 }
