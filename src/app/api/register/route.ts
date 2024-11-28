@@ -80,7 +80,6 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-    
         return NextResponse.json(
           { error: "user already exists" },
           { status: 400 }
