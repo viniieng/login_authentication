@@ -4,18 +4,22 @@ import { headers } from "next/headers";
 
 export default async function Home() {
   try {
-    const cookie = headers().get("cookie"); 
+    const cookie = (await headers()).get("cookie");
 
     await axios.get(`${process.env.API_URL}/login`, {
       headers: {
         cookie,
       },
-      withCredentials: true, 
+      withCredentials: true,
     });
   } catch (error) {
-    console.error("Error during authentication:", error); 
+    console.error("Error during authentication:", error);
     redirect("/login");
   }
 
-  return <h1>Hello World</h1>;
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <h1 className="text-4xl font-bold">Usuário está logado</h1>
+    </div>
+  );
 }

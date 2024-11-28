@@ -43,9 +43,13 @@ export function LoginForm() {
             password,
           });
 
-          setFormLoading(false);
+          setFormLoading(false);  
+          if (response.status === 200) {
+            window.location.href = "/";
+          }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
-          setFormError("login invalid");
+          setFormError("login invalid",);
           setFormLoading(false);
         }
       }
@@ -54,11 +58,11 @@ export function LoginForm() {
   );
 
   return (
-    <form onSubmit={(event) => handleRLoginClick(event)}>
+    <form className="mt-80" onSubmit={(event) => handleRLoginClick(event)}>
       <Card className="w-full max-w-sm m-auto mt-5">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Insira seus dados para se cadastrar</CardDescription>
+          <CardDescription>Insira seus dados para se logar</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
@@ -76,7 +80,7 @@ export function LoginForm() {
             <Input
               ref={passwordInputRef}
               id="password"
-              type="password"
+              type="password" //text
               required
             />
           </div>

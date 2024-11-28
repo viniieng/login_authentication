@@ -99,10 +99,10 @@ export function RegisterForm() {
   );
 
   return (
-    <form onSubmit={(event) => handleRegisterClick(event)}>
+    <form className="mt-80" onSubmit={(event) => handleRegisterClick(event)}>
       <Card className="w-full max-w-sm m-auto mt-5">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Cadastro</CardTitle>
           <CardDescription>Insira seus dados para se cadastrar</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
