@@ -90,5 +90,6 @@ export async function POST(request: Request) {
         );
       }
     }
+    console.error("Unexpected error:", error);
   }
 }
