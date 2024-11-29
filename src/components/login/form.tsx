@@ -14,7 +14,7 @@ import { Label } from "@/src/components/ui/label";
 import axios from "axios";
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FormEvent, useCallback, useRef, useState } from "react";
 
 export function LoginForm() {
