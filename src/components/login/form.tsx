@@ -5,7 +5,6 @@ import { Button } from "@/src/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,56 +12,56 @@ import {
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import axios from "axios";
-import { LoaderCircle } from "lucide-react";
+import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useCallback, useRef, useState } from "react";
 
 export function LoginForm() {
+  const router = useRouter();
+
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
   const [formError, setFormError] = useState("");
   const [formLoading, setFormLoading] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
 
-  const handleRLoginClick = useCallback(
+  const handleLoginSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setFormError("");
       setFormLoading(true);
 
-      if (
-        emailInputRef.current &&
-        passwordInputRef.current
-      ) {
-        const email = emailInputRef.current?.value;
-        const password = passwordInputRef.current.value;
+      if (emailInputRef.current && passwordInputRef.current) {
+        const email = emailInputRef.current.value;
+        const pass1 = passwordInputRef.current.value;
 
         try {
           const response = await axios.post<LoginResponse>("/api/login", {
             email,
-            password,
+            password: pass1,
           });
 
-          setFormLoading(false);  
-          if (response.status === 200) {
-            window.location.href = "/";
-          }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
-          setFormError("login invalid",);
+          router.push("/");
+
           setFormLoading(false);
+          setFormSuccess(true);
+        } catch (error) {
+          setFormError("login invalid");
+          setFormLoading(false);
+          setFormSuccess(false);
         }
       }
     },
-    []
+    [router]
   );
 
   return (
-    <form className="mt-80" onSubmit={(event) => handleRLoginClick(event)}>
+    <form onSubmit={(event) => handleLoginSubmit(event)}>
       <Card className="w-full max-w-sm m-auto mt-5">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Insira seus dados para se logar</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
@@ -71,7 +70,7 @@ export function LoginForm() {
               ref={emailInputRef}
               id="email"
               type="email"
-              placeholder="seu@email.com"
+              placeholder="seu@email.com.br"
               required
             />
           </div>
@@ -80,15 +79,15 @@ export function LoginForm() {
             <Input
               ref={passwordInputRef}
               id="password"
-              type="password" //text
+              type="password"
               required
             />
           </div>
         </CardContent>
         <CardFooter className="grid">
           {formError && (
-            <div className="text-red-600 mb-4">
-              <p className="text-sm font-semibold">Erro no Login</p>
+            <div className="text-amber-600 mb-4">
+              <p className="text-sm font-semibold">Erro no login</p>
               <p>Verifique suas credenciais.</p>
             </div>
           )}
@@ -96,11 +95,13 @@ export function LoginForm() {
             className="w-full flex items-center gap-2"
             disabled={formLoading}
           >
-            {formLoading && <LoaderCircle className="w-[18px] animate-spin" />}
+            {formLoading && (
+              <LoaderPinwheel className="w-[18px] animate-spin" />
+            )}
             Entrar
           </Button>
           <div className="mt-5 underline text-center">
-          <Link href="/register">Ir para o cadastro </Link>
+            <Link href="/cadastro">Ir para o cadastro</Link>
           </div>
         </CardFooter>
       </Card>
