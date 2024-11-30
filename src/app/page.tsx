@@ -10,7 +10,8 @@ export default async function Home() {
       headers: headers() as unknown as AxiosHeaders,
     });
   } catch (error) {
-    redirect("/login");
+   // redirect("/login");
+   console.log("aaaaaa", error)
   }
 
   return (
