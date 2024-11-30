@@ -101,7 +101,7 @@ export function LoginForm() {
             Entrar
           </Button>
           <div className="mt-5 underline text-center">
-            <Link href="/cadastro">Ir para o cadastro</Link>
+            <Link href="/register">Ir para o cadastro</Link>
           </div>
         </CardFooter>
       </Card>

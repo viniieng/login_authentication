@@ -1,21 +1,17 @@
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { redirect } from "next/navigation";
+
 import { headers } from "next/headers";
 
 export default async function Home() {
   try {
-    const cookie = (await headers()).get("cookie");
-
     await axios.get(`${process.env.API_URL}/login`, {
-      headers: {
-        cookie,
-      },
-      withCredentials: true,
+      headers: headers() as unknown as AxiosHeaders,
     });
   } catch (error) {
-    console.error("Error during authentication:", error);
     redirect("/login");
   }
+
 
   return (
     <div className="flex items-center justify-center h-screen">
