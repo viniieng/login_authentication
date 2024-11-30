@@ -9,6 +9,7 @@ export default async function Home() {
       headers: headers() as unknown as AxiosHeaders,
     });
   } catch (error) {
+    console.error("Erro na autenticação:", error.response?.data || error.message);
     redirect("/login");
   }
 
