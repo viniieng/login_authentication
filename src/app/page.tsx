@@ -1,27 +1,15 @@
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { redirect } from "next/navigation";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
+
+
 
 export default async function Home() {
   try {
-    const requestHeaders = headers();
-    const headerObject = Object.fromEntries(requestHeaders.entries());
-
-    const cookieStore = cookies();
-    const cookieHeader = cookieStore.getAll().map(({ name, value }) => `${name}=${value}`).join("; ");
-
     await axios.get(`${process.env.API_URL}/login`, {
-      headers: {
-        ...headerObject, 
-        Cookie: cookieHeader, 
-      },
+      headers: headers() as unknown as AxiosHeaders,
     });
   } catch (error) {
-    console.error("Erro na autenticação:", {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data,
-    });
     redirect("/login");
   }
 
