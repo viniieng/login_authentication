@@ -1,18 +1,29 @@
-import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 import { redirect } from "next/navigation";
-
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export default async function Home() {
   try {
+    const requestHeaders = headers();
+    const headerObject = Object.fromEntries(requestHeaders.entries());
+
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore.getAll().map(({ name, value }) => `${name}=${value}`).join("; ");
+
     await axios.get(`${process.env.API_URL}/login`, {
-      headers: headers() as unknown as AxiosHeaders,
+      headers: {
+        ...headerObject, 
+        Cookie: cookieHeader, 
+      },
     });
   } catch (error) {
-    console.error("Erro na autenticação:", error.response?.data || error.message);
+    console.error("Erro na autenticação:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
     redirect("/login");
   }
-
 
   return (
     <div className="flex items-center justify-center h-screen">
