@@ -43,6 +43,7 @@ export function LoginForm() {
             password: pass1,
           });
 
+          console.log("11111")
           router.push("/");
 
           setFormLoading(false);
